@@ -48,6 +48,10 @@ pub struct Cli {
 	#[clap(long, env, default_value = "true", parse(try_from_str))]
 	pub yahoo_use_api: bool,
 
+	/// For Disabling catch-all check
+	#[clap(long, env, default_value = "false", parse(try_from_str))]
+	pub disable_catch_all: bool,
+
 	/// The email to check.
 	pub to_email: Option<String>,
 
@@ -79,7 +83,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 		input
 			.from_email(CONF.from_email.clone())
 			.hello_name(CONF.hello_name.clone())
-			.yahoo_use_api(CONF.yahoo_use_api);
+			.yahoo_use_api(CONF.yahoo_use_api)
+			.disable_catch_all(CONF.disable_catch_all)
+		;
 		if let Some(proxy_host) = &CONF.proxy_host {
 			input.proxy(proxy_host.clone(), CONF.proxy_port);
 		}

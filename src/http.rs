@@ -65,7 +65,9 @@ async fn req_handler(req: Request<Body>) -> Result<Response<Body>, hyper::Error>
 			input
 				.from_email(body.from_email.unwrap_or_else(|| CONF.from_email.clone()))
 				.hello_name(body.hello_name.unwrap_or_else(|| CONF.hello_name.clone()))
-				.yahoo_use_api(CONF.yahoo_use_api);
+				.yahoo_use_api(CONF.yahoo_use_api)
+				.disable_catch_all(CONF.disable_catch_all)
+			;
 			if let Some(proxy_host) = body.proxy_host.map(Cow::Owned).or_else(|| CONF.proxy_host.as_ref().map(Cow::Borrowed)) {
 				input.proxy(
 					proxy_host.into_owned(),

@@ -208,6 +208,7 @@ pub async fn check_email(inputs: &CheckEmailInput) -> Vec<CheckEmailOutput> {
 			proxy: inputs.proxy.clone(),
 			smtp_timeout: inputs.smtp_timeout,
 			yahoo_use_api: inputs.yahoo_use_api,
+			disable_catch_all: inputs.disable_catch_all
 		}
 	});
 	future::join_all(inputs.map(check_single_email)).await

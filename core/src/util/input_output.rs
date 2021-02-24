@@ -55,6 +55,9 @@ pub struct CheckEmailInput {
 	///
 	/// Defaults to true.
 	pub yahoo_use_api: bool,
+	/// This option was added due to microsoft's error response of :
+	/// 452 4.5.3 Recipients belong to multiple regions ATTR38
+	pub disable_catch_all: bool
 }
 
 impl Default for CheckEmailInput {
@@ -66,6 +69,7 @@ impl Default for CheckEmailInput {
 			proxy: None,
 			smtp_timeout: None,
 			yahoo_use_api: true,
+			disable_catch_all: false
 		}
 	}
 }
@@ -110,6 +114,14 @@ impl CheckEmailInput {
 	/// servers.
 	pub fn yahoo_use_api(&mut self, use_api: bool) -> &mut CheckEmailInput {
 		self.yahoo_use_api = use_api;
+		self
+	}
+
+	/// Set whether to disable the catch-all checking function for e.g.
+	/// when microsoft returns an error of :
+	/// 452 4.5.3 Recipients belong to multiple regions ATTR38
+	pub fn disable_catch_all(&mut self, disable: bool) -> &mut CheckEmailInput {
+		self.disable_catch_all = disable;
 		self
 	}
 }
