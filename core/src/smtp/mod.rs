@@ -360,7 +360,7 @@ async fn create_smtp_future(
 	// Ok(SmtpDetails { can_connect_smtp: false, ... }).
 	let mut smtp_client = connect_to_host(host, port, input).await?;
 
-	let mut is_catch_all = true;
+	let mut is_catch_all = false;
 
 	if input.disable_catch_all == false {
 		is_catch_all = smtp_is_catch_all(&mut smtp_client, domain)
